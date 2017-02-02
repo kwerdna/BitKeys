@@ -13,10 +13,10 @@ import base58
 minsigs = 2
 maxsigs = 3
 if len(sys.argv) == 3:
- minsigs = int(sys.argv[1])
- maxsigs = int(sys.argv[2])
- if maxsigs > 16: maxsigs = 16;
- if minsigs > maxsigs: minsigs = maxsigs -1;
+	minsigs = int(sys.argv[1])
+	maxsigs = int(sys.argv[2])
+	if maxsigs > 16: maxsigs = 16;
+	if minsigs > maxsigs: minsigs = maxsigs -1;
  
 def returnkeys(n):
 	myarray = []
