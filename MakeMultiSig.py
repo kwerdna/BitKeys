@@ -21,11 +21,9 @@ if len(sys.argv) == 3:
 def returnkeys(n):
 	myarray = []
 	for i in range(n):
-		data = {'priv': random_key(), 'uncompressed': {}, 'compressed': {} }
-		data['uncompressed']['wif'] = encode_privkey(data['priv'], 'wif')
-		data['compressed']['wif'] = encode_privkey(data['priv'], 'wif_compressed')
-		for c in ('compressed', 'uncompressed'):
-			data[c]['pub'] =  privtopub(data[c]['wif'])
+		data = {'priv': random_key()}
+		data['wif'] = encode_privkey(data['priv'], 'wif_compressed')
+		data['pub'] =  privtopub(data['wif'])
 		myarray.append(data)
 	return (myarray)
 
@@ -35,7 +33,7 @@ keypairs = returnkeys(maxsigs)
 
 # make the multi sig script and address
 print("Making {} of {} multisig address".format(minsigs, maxsigs))
-multisig_redeem_script = mk_multisig_script([p['compressed']['pub'] for p in keypairs], minsigs, maxsigs)
+multisig_redeem_script = mk_multisig_script([p['pub'] for p in keypairs], minsigs, maxsigs)
 
 multisig_address = scriptaddr(multisig_redeem_script) # main net
 testnet_multisig_address = scriptaddr(multisig_redeem_script, 196) # testnet
@@ -47,5 +45,5 @@ print("redeem: {}\n".format(multisig_redeem_script))
 #for k in keypairs:
 for i in range(len(keypairs)):
 	print "prv{}: {}".format(i+1, keypairs[i]['priv'])
-	print "pub{}: {}".format(i+1, keypairs[i]['compressed']['pub'])
-	print "wif{}: {}".format(i+1, keypairs[i]['compressed']['wif'])
+	print "pub{}: {}".format(i+1, keypairs[i]['pub'])
+	print "wif{}: {}".format(i+1, keypairs[i]['wif'])
