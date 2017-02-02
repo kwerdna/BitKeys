@@ -46,14 +46,7 @@ for key in keypairs:
 	print("priv key : {}".format(key['priv']))
 	for c in ('compressed', 'uncompressed'):
 		print("{}".format(c))
-		print("   priv wif: {}".format(key[c]['wif']))
-		print("   pub     : {}".format(key[c]['pub']))
-		print("   btc     : {}".format(key[c]['btc']))
-		print("   tbtc    : {}".format(key[c]['tbtc']))
-		print("   ltc     : {}".format(key[c]['ltc']))
-		print("   doge    : {}".format(key[c]['doge']))
-		print("   tdoge   : {}".format(key[c]['tdoge']))
-		print("   dash    : {}".format(key[c]['dash']))
-		print("   tdash   : {}".format(key[c]['tdash']))
+		for s in ('wif', 'pub', 'btc', 'tbtc', 'ltc', 'doge', 'tdoge', 'dash', 'tdash'):
+			print ("    {}:\t{}".format(s, key[c][s]))
 	print "=*=" * 10 
 
