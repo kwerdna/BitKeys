@@ -1,4 +1,4 @@
-# many addresses from one pub key
+# demo of t of n multisig 
 import sys
 from bitcoin import *
 import base58
