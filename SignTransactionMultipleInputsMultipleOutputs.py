@@ -5,6 +5,11 @@ import base58
 import hashlib
 import ecdsa
 
+# doing this for multiple inputs was harder than i thought it would be
+# you need a different unsigend transaction hash for each input you sign
+# with the scripts removed from the other inputs.
+# since there are many libraries that do the job, decided to not spend any more time on this
+
 fee = 4000
 spend = [
 	#{"address": "", "priv_key": "", "previous_txid": "", "value": "", index: "", compressed: True/False},
@@ -114,7 +119,7 @@ for i in range(0, len(spend)):
 			public_key = '02' + verify[:len(verify)//2]
 	else:
 		public_key = '04' + verify
-	print public_key;print
+	#print public_key;print
 	signature = sk.sign_digest(unsigned_transaction_hash, sigencode = ecdsa.util.sigencode_der)
 	sigscript = (
 		signature + "\01"
