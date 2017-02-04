@@ -6,10 +6,10 @@ import hashlib
 import ecdsa
 
 inputs = [
-	{}
+    {}
 ]
 outputs = [
-	{}
+    {}
 ]
 
 # the spending address(es)
@@ -25,48 +25,48 @@ return_pub_key_hash = base58.b58decode_check(return_address)[1:].encode("hex")
 explore_url = 'https://chain.so/tx/BTCTEST/f362e63bbfba199e177730d99196662fd693520dc1a2f7b0ac773b3e089d0aa4'
 
 class raw_tx:
-	def __init__(self, in_count, out_count, lock_time=0, version=1):
-		self.version      = struct.pack("<L", version)
-		self.input       = []
-		self.tx_in_count  = struct.pack("<B", in_count)
-		for i in range(0, in_count):
-			self.input.append({})
-		self.output      = []
-		self.tx_out_count = struct.pack("<B", out_count)
-		for i in range(0, out_count):
-			self.output.append({})
-		self.lock_time    = struct.pack("<L", lock_time)
+    def __init__(self, in_count, out_count, lock_time=0, version=1):
+        self.version      = struct.pack("<L", version)
+        self.input       = []
+        self.tx_in_count  = struct.pack("<B", in_count)
+        for i in range(0, in_count):
+            self.input.append({})
+        self.output      = []
+        self.tx_out_count = struct.pack("<B", out_count)
+        for i in range(0, out_count):
+            self.output.append({})
+        self.lock_time    = struct.pack("<L", lock_time)
 
 def flip_bytes(string):
-	flipped = "".join(reversed([string[i:i+2] for i in range(0, len(string), 2)]))
-	return flipped
+    flipped = "".join(reversed([string[i:i+2] for i in range(0, len(string), 2)]))
+    return flipped
 
 def build_tx(tx, signed=0):
-	t = tx.version + tx.tx_in_count
-	for i in range (0, len(tx.input)):
-		t += (
-			tx.input[i]["txouthash"]
-			+ tx.input[i]["tx_out_index"]
-		)
-		if signed <1:
-			t += tx.input[i]["script_bytes"]
-			t +=	tx.input[i]["script"]
-		else:
-			t += tx.input[i]["sigscript_length"]
-			t += tx.input[i]["signature_length"]
-			t += tx.input[i]["sigscript"]
+    t = tx.version + tx.tx_in_count
+    for i in range (0, len(tx.input)):
+        t += (
+            tx.input[i]["txouthash"]
+            + tx.input[i]["tx_out_index"]
+        )
+        if signed <1:
+            t += tx.input[i]["script_bytes"]
+            t +=    tx.input[i]["script"]
+        else:
+            t += tx.input[i]["sigscript_length"]
+            t += tx.input[i]["signature_length"]
+            t += tx.input[i]["sigscript"]
 
-		t += tx.input[i]["sequence"]
-	t += rtx.tx_out_count
-	for i in range (0, len(tx.output)):
-		t += (
-		tx.output[i]["value"]
-		+ tx.output[i]["pk_script_bytes"]
-		+ tx.output[i]["pk_script"]
-		)
-	t += tx.lock_time
-	if signed < 1: t += struct.pack("<L", 1)
-	return t
+        t += tx.input[i]["sequence"]
+    t += rtx.tx_out_count
+    for i in range (0, len(tx.output)):
+        t += (
+        tx.output[i]["value"]
+        + tx.output[i]["pk_script_bytes"]
+        + tx.output[i]["pk_script"]
+        )
+    t += tx.lock_time
+    if signed < 1: t += struct.pack("<L", 1)
+    return t
 
 # new raw transaction
 rtx = raw_tx(1,1)
@@ -95,10 +95,10 @@ vk = sk.verifying_key
 public_key = ('\04' + vk.to_string()).encode("hex")
 signature = sk.sign_digest(unsigned_tx_hash, sigencode = ecdsa.util.sigencode_der)
 sigscript = (
-	signature
-	+ "\01"
-	+ struct.pack("<B", len(public_key.decode("hex")))
-	+ public_key.decode("hex")
+    signature
+    + "\01"
+    + struct.pack("<B", len(public_key.decode("hex")))
+    + public_key.decode("hex")
 
 )
 # add the signatures for thsi input to the tx

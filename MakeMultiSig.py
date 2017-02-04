@@ -13,19 +13,19 @@ import base58
 minsigs = 2
 maxsigs = 3
 if len(sys.argv) == 3:
-	minsigs = int(sys.argv[1])
-	maxsigs = int(sys.argv[2])
-	if maxsigs > 16: maxsigs = 16;
-	if minsigs > maxsigs: minsigs = maxsigs -1;
+    minsigs = int(sys.argv[1])
+    maxsigs = int(sys.argv[2])
+    if maxsigs > 16: maxsigs = 16;
+    if minsigs > maxsigs: minsigs = maxsigs -1;
  
 def returnkeys(n):
-	myarray = []
-	for i in range(n):
-		data = {'priv': random_key()}
-		data['wif'] = encode_privkey(data['priv'], 'wif_compressed')
-		data['pub'] =  privtopub(data['wif'])
-		myarray.append(data)
-	return (myarray)
+    myarray = []
+    for i in range(n):
+        data = {'priv': random_key()}
+        data['wif'] = encode_privkey(data['priv'], 'wif_compressed')
+        data['pub'] =  privtopub(data['wif'])
+        myarray.append(data)
+    return (myarray)
 
 # make key pairs
 print 'Making {} key pairs'.format(maxsigs)
@@ -44,6 +44,6 @@ print("tbtc  : {}".format(testnet_multisig_address))
 print("redeem: {}\n".format(multisig_redeem_script))
 #for k in keypairs:
 for i in range(len(keypairs)):
-	print "prv{}: {}".format(i+1, keypairs[i]['priv'])
-	print "pub{}: {}".format(i+1, keypairs[i]['pub'])
-	print "wif{}: {}".format(i+1, keypairs[i]['wif'])
+    print "prv{}: {}".format(i+1, keypairs[i]['priv'])
+    print "pub{}: {}".format(i+1, keypairs[i]['pub'])
+    print "wif{}: {}".format(i+1, keypairs[i]['wif'])
